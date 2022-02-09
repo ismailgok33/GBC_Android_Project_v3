@@ -57,7 +57,8 @@ public class LessonListActivity extends AppCompatActivity {
                 Log.d("xDEBUG", "lessons[i].lessonNumber: " + lessons[i].getLessonNumber());
                 Intent intent = new Intent(LessonListActivity.this, LessonDetailActivity.class);
 
-                intent.putExtra("lessonNumber", lessons[i].getLessonNumber());
+                // intent.putExtra("lessonNumber", lessons[i].getLessonNumber());
+                intent.putExtra("lessonFromList", lessons[i]);
 
                 startActivity(intent);
             }

@@ -3,6 +3,7 @@ package com.example.android_project_v3;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +23,7 @@ public class LessonDetailActivity extends AppCompatActivity {
 
     TextView lessonDetailTextView, lessonLengthTextView;
     EditText lessonNotesEditText;
-    Button completeLessonButton, saveNotesButton;
+    Button completeLessonButton, saveNotesButton, watchlessonButton;
     Lesson lesson;
     SharedPreferences sharedpreferences;
 
@@ -46,12 +47,16 @@ public class LessonDetailActivity extends AppCompatActivity {
         lessonLengthTextView = binding.textviewLessonLength;
         // completeLessonButton = findViewById(R.id.button_mark_complete);
         completeLessonButton = binding.buttonMarkComplete;
+        watchlessonButton = binding.buttonWatchLesson;
         // saveNotesButton = findViewById(R.id.button_save_notes);
         saveNotesButton = binding.buttonSaveNotes;
         // lessonNotesEditText = findViewById(R.id.edittext_take_notes);
         lessonNotesEditText = binding.edittextTakeNotes;
 
-        lesson = getLessonInfo();
+        // TODO : get extra name from string resource
+        // lesson = getLessonInfo();
+        lesson = (Lesson) getIntent().getSerializableExtra("lessonFromList");
+
         String lessonNotesKey = "lessonNotes_" + lesson.getLessonNumber();
         Log.d("xDEBUG", "lessonNotes: " + lessonNotesKey);
 
@@ -82,6 +87,19 @@ public class LessonDetailActivity extends AppCompatActivity {
                 Toast.makeText(LessonDetailActivity.this,"Note is saved.",Toast.LENGTH_LONG).show();
             }
         });
+
+        watchlessonButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LessonDetailActivity.this, WebViewActivity.class);
+
+                intent.putExtra("url", lesson.getUrl());
+
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     private Lesson getLessonInfo() {
